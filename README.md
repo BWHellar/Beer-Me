@@ -11,8 +11,8 @@ This project will also allow users to find local game stores through their phone
 
 <Insert Code Snippets Here>
 
-# To DO
-TBD
+# General Outline
+![image](Outline.jpg)
 
 ## Known Bugs
 TBD
