@@ -1,9 +1,8 @@
 
 
-# Collector
+# Beer Me
 
-This project will allow you to save and organize your various collections that you own.  This project has a skew towards playing cards and board games that you own but you could technically put anyhting in here.  This project will focus on shipping to mobile through usage of the Cordova framework.
-This project will also allow users to find local game stores through their phones geolocation and allow for local storage of pictures of cards or games that they own.
+This project will focus on being able to catalogue beers you may have tried. It will allow users to input beers they tried with various specs and give commentary about their experience for reference. Since this application is specifically designed to work on the users phone it will allow the user to access their geolocation and find nearby breweries for their next conquest.  If something stands out in style or look then this app will allow the user to access their camera and take a picture to save for later viewing.
 
 
 
@@ -26,7 +25,9 @@ Brendan Hellar - bwhellar@gmail.com
 * HTML
 * CSS
 * JavaScript
-* Cordova Framework
+* Ionic Framework
+* Capacitor Framework
+* Angular 
 
 ### License
 
