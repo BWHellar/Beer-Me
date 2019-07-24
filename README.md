@@ -11,7 +11,7 @@ This project will focus on being able to catalogue beers you may have tried. It 
 <Insert Code Snippets Here>
 
 # General Outline
-TBD
+![image](/Setup.jpg)
 
 ## Known Bugs
 TBD
