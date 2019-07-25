@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { BeerDetailPage } from './beer-detail.page';
+import { CreateTappedComponent } from '../../../tapped/create-tapped/create-tapped.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [BeerDetailPage]
+  declarations: [BeerDetailPage, CreateTappedComponent],
+  entryComponents: [CreateTappedComponent]
 })
 export class BeerDetailPageModule {}

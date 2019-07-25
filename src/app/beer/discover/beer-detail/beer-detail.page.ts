@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, ModalController } from '@ionic/angular';
 
 import { BeerService } from '../../beer.service';
 import { Beer } from '../../beer.model';
+import { CreateTappedComponent } from '../../../tapped/create-tapped/create-tapped.component';
+
 
 @Component({
   selector: 'app-beer-detail',
@@ -16,7 +18,8 @@ export class BeerDetailPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private route: ActivatedRoute,
-    private beerService: BeerService
+    private beerService: BeerService,
+    private modalCtrl: ModalController
     ) {}
 
   ngOnInit() {
@@ -30,6 +33,10 @@ export class BeerDetailPage implements OnInit {
   }
 
   onSaveBeer() {
-    this.navCtrl.navigateBack('/beer/tabs/discover');
+    this.modalCtrl
+    .create({component: CreateTappedComponent})
+    .then(modalEl => {
+      modalEl.present();
+    });
   }
 }
