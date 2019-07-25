@@ -1,9 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>beer-detail</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/beer/tabs/discover"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Beer Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content padding>
+  <ion-button color="primary" margin (click)="onSaveBeer()">Save</ion-button>
 </ion-content>
