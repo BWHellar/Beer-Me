@@ -17,13 +17,36 @@
             <ion-card-content>
               <p>{{ loadedBeer[0].description }}</p>
             </ion-card-content>
+            <div>
+              <ion-button 
+              fill="clear" 
+              color="primary"
+              routerDirection="forward"
+              [routerLink]="[
+                '/', 
+                'beer', 
+                'tabs', 
+                'discover', 
+                loadedBeer[0].id
+                ]">
+                More
+              </ion-button>
+            </div>
           </ion-card>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size ="12" size-sm="8" offset-sm="2" text-center>
           <ion-list>
-            <ion-item *ngFor="let beer of loadedBeer.slice(1)">
+            <ion-item 
+            *ngFor="let beer of loadedBeer.slice(1)" 
+            [routerLink]="
+              ['/', 
+              'beer', 
+              'tabs', 
+              'discover', 
+              beer.id]"
+              detail>
               <ion-thumbnail slot="start">
                 <ion-img [src]="beer.imageUrl"></ion-img>
               </ion-thumbnail>
