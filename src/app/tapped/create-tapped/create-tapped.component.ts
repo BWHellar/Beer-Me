@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Beer } from 'src/app/beer/beer.model';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-create-tapped',
@@ -6,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-tapped.component.scss'],
 })
 export class CreateTappedComponent implements OnInit {
+  @Input() tappedBeer: Beer;
 
-  constructor() { }
+  constructor(private modalCtrl: ModalController) { }
 
   ngOnInit() {}
 
+  onCancel() {
+    this.modalCtrl.dismiss(null, 'cancel');
+  }
+
+  onTapBeer() {
+    this.modalCtrl.dismiss({
+      message: 'Test Msg'
+    }, 'confirm');
+  }
 }
