@@ -36,4 +36,10 @@ export class BeerService {
   }
 
   constructor() { }
+
+  getBeer(id: string){
+    return {...this._beer.find(
+      b=>b.id === id
+    )};
+  }
 }

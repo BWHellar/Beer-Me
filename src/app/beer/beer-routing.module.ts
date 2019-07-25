@@ -33,7 +33,7 @@ const routes: Routes = [
                         loadChildren: './info/new-beer/new-beer.module#NewBeerPageModule'
                     },
                     {
-                        path: 'edit/:beerid',
+                        path: 'edit/:beerId',
                         loadChildren: './info/edit-beer/edit-beer.module#EditBeerPageModule'
                     },
                     {

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+
+import { BeerService } from '../../beer.service';
+import { Beer } from '../../beer.model';
 
 @Component({
   selector: 'app-beer-detail',
@@ -8,14 +11,25 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./beer-detail.page.scss'],
 })
 export class BeerDetailPage implements OnInit {
+  beer: Beer;
 
-  constructor(private router: Router, private navCtrl: NavController) { }
+  constructor(
+    private navCtrl: NavController,
+    private route: ActivatedRoute,
+    private beerService: BeerService
+    ) {}
 
   ngOnInit() {
+    this.route.paramMap.subscribe(paramMap => {
+      if(!paramMap.has('beerId')){
+        this.navCtrl.navigateBack('/beer/tabs/discover');
+        return;
+      }
+      this.beer = this.beerService.getBeer(paramMap.get('beerId'))
+    });
   }
 
   onSaveBeer() {
     this.navCtrl.navigateBack('/beer/tabs/discover');
   }
-
 }

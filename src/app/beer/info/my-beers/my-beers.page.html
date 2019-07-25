@@ -3,10 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/beer/tabs/info"></ion-back-button>
     </ion-buttons>
-    <ion-title>my-beers</ion-title>
+    <ion-title>{{ beer.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content padding>
+  <ion-buttons 
+  margin color="primary" 
+  [routerLink]="['/', 'beer', 'tabs', 'info', 'edit',  beer.id]"
+  >Edit</ion-buttons>
 </ion-content>
