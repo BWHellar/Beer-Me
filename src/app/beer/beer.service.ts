@@ -39,7 +39,7 @@ export class BeerService {
 
   getBeer(id: string){
     return {...this._beer.find(
-      b=>b.id === id
+      b => b.id === id
     )};
   }
 }
