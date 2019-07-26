@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { discoverLocalRefs } from '@angular/core/src/render3/context_discovery';
 import { LoadingController } from '@ionic/angular';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-auth',
@@ -31,5 +32,9 @@ export class AuthPage implements OnInit {
         this.router.navigateByUrl('/beer/tabs/discover');
       }, 1000);
     });
+  }
+
+  onSubmit(form: NgForm){
+    console.log(form);
   }
 }
