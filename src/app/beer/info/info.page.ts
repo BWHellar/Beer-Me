@@ -17,4 +17,7 @@ export class InfoPage implements OnInit {
     this.tryBeers = this.beerService.beer;
   }
 
+  onEdit(beerId: string) {
+    console.log('Editing', beerId);
+  }
 }
