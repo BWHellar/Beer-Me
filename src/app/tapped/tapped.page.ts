@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { TappedService } from './tapped.service';
+import { Tapped } from './tapped.model';
+import { IonItemSliding } from '@ionic/angular';
 
 @Component({
   selector: 'app-tapped',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TappedPage implements OnInit {
 
-  constructor() { }
+  loadedTapped: Tapped[];
+
+  constructor(private tappedService: TappedService) { }
 
   ngOnInit() {
+    this.loadedTapped = this.tappedService.tapped;
   }
 
+  onUndo(beerId: string, slidingEl: IonItemSliding){
+    slidingEl.close();
+    
+  }
 }
