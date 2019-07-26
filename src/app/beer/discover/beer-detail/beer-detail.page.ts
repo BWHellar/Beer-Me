@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController, ModalController, ActionSheetController } from '@ionic/angular';
 
 import { BeerService } from '../../beer.service';
 import { Beer } from '../../beer.model';
@@ -19,7 +19,8 @@ export class BeerDetailPage implements OnInit {
     private navCtrl: NavController,
     private route: ActivatedRoute,
     private beerService: BeerService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private actionSheetCtrl: ActionSheetController
     ) {}
 
   ngOnInit() {
@@ -33,6 +34,35 @@ export class BeerDetailPage implements OnInit {
   }
 
   onSaveBeer() {
+
+    this.actionSheetCtrl.create({
+      header: 'Select',
+      buttons: [
+        {
+          text: 'Select Date',
+          handler: () => {
+            this.openTappedModal('select');
+          }
+        },
+        {
+          text: 'Unknown',
+          handler: () => {
+            this.openTappedModal('random');
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    }).then(actionSheetEl => {
+      actionSheetEl.present();
+    });
+  }
+
+
+  openTappedModal(mode: 'select' | 'random') {
+    console.log(mode);
     this.modalCtrl
     .create({
       component: CreateTappedComponent, 
@@ -47,6 +77,6 @@ export class BeerDetailPage implements OnInit {
       if (resultData.role === 'confirm') {
         console.log('Tapped');
       }
-    })
+    });
   }
 }
