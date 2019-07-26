@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BeerService } from '../beer.service';
 
 import { Beer } from '../beer.model';
+import { SegmentChangeEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-discover',
@@ -19,4 +20,7 @@ export class DiscoverPage implements OnInit {
     this.listedLoadedBeer = this.loadedBeer.slice(1);
   }
 
+  onFilterUpdate(event: CustomEvent<SegmentChangeEventDetail>){
+    console.log(event.detail);
+  }
 }
