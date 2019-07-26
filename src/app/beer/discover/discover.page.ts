@@ -10,11 +10,13 @@ import { Beer } from '../beer.model';
 })
 export class DiscoverPage implements OnInit {
   loadedBeer: Beer[];
+  listedLoadedBeer: Beer[];
 
   constructor(private beerService: BeerService) { }
 
   ngOnInit() {
     this.loadedBeer = this.beerService.beer;
+    this.listedLoadedBeer = this.loadedBeer.slice(1);
   }
 
 }

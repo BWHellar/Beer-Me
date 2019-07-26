@@ -40,16 +40,17 @@
       </ion-row>
       <ion-row>
         <ion-col size ="12" size-sm="8" offset-sm="2" text-center>
-          <ion-list>
+          <ion-virtual-scroll [items]="listedLoadedBeer" approxItemHeight="70px">
             <ion-item 
-            *ngFor="let beer of loadedBeer.slice(1)" 
             [routerLink]="
               ['/', 
               'beer', 
               'tabs', 
               'discover', 
               beer.id]"
-              detail>
+            detail
+            *virtualItem="let beer" 
+              >
               <ion-thumbnail slot="start">
                 <ion-img [src]="beer.imageUrl"></ion-img>
               </ion-thumbnail>
@@ -58,7 +59,7 @@
                 <p>{{ beer.description }}</p>
               </ion-label>
             </ion-item>
-          </ion-list>
+          </ion-virtual-scroll>
         </ion-col>
       </ion-row>
     </ion-grid>
