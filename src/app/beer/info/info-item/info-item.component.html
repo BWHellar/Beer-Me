@@ -1,0 +1,19 @@
+<ion-item 
+[routerLink]="[
+  '/', 
+  'beer', 
+  'tabs', 
+  'info', 
+  beer.id
+  ]">
+  <ion-thumbnail slot="start">
+    <ion-img [src]="beer.imageUrl"></ion-img>
+  </ion-thumbnail>
+  <ion-label>
+    <h1>{{ beer.title }}</h1>
+    <div class="details">
+      <ion-icon name="calendar"></ion-icon>
+      <ion-text color="primary" margin-horizontal>{{ getDummyDate() | date }}</ion-text>
+    </div>
+  </ion-label>
+</ion-item>
