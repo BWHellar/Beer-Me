@@ -28,10 +28,12 @@ export class CreateTappedComponent implements OnInit {
       return;
     }
 
-    this.modalCtrl.dismiss({ tappedData: {
-      name: this.form.value['name'],
-      state: this.form.value['state'],
-      date: this.form.value['date']
+    this.modalCtrl.dismiss(
+      { 
+        tappedData: {
+          name: this.form.value['beer-name'],
+          state: this.form.value['state-name'],
+          date: this.form.value['date-name']
     }  }, 'confirm');
   }
 

@@ -16,7 +16,7 @@
       <ion-col size-sm="6" offset-sm="3">
         <ion-item>
           <ion-label position="floating">Name</ion-label>
-          <ion-input type="text" ngModel name="name" required></ion-input>
+          <ion-input type="text" ngModel name="beer-name" required></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -24,7 +24,7 @@
         <ion-col size-sm="6" offset-sm="3">
           <ion-item>
             <ion-label position="floating">State</ion-label>
-            <ion-select name="state">
+            <ion-select ngModel name="state-name">
               <ion-select-option value="Washington">Washington</ion-select-option>
               <ion-select-option value="California">California</ion-select-option>
               <ion-select-option value="Oregon">Oregon</ion-select-option>
@@ -38,7 +38,8 @@
           <ion-item>
             <ion-label position="floating">Date</ion-label>
             <ion-datetime 
-              name="date"
+              ngModel
+              name="date-name"
               display-format="MMM DD YYYY"
               picker-format="YY MMM DD"
               ></ion-datetime>

@@ -11,7 +11,10 @@ export class TappedService {
             id: '419',
             beerId: 'b1',
             beerTitle: 'Sister',
-            userId: 'jojo'
+            userId: 'jojo',
+            date: 'Test',
+            state: 'California'
+
         }
     ];
 
