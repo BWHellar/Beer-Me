@@ -5,5 +5,6 @@ export class Beer {
         public description: string,
         public imageUrl: string,
         public price: number,
+        public date: Date
         ){}
 }

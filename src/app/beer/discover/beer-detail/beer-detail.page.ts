@@ -45,12 +45,6 @@ export class BeerDetailPage implements OnInit {
           }
         },
         {
-          text: 'Unknown',
-          handler: () => {
-            this.openTappedModal('random');
-          }
-        },
-        {
           text: 'Cancel',
           role: 'cancel'
         }
@@ -61,12 +55,12 @@ export class BeerDetailPage implements OnInit {
   }
 
 
-  openTappedModal(mode: 'select' | 'random') {
+  openTappedModal(mode: 'select' ) {
     console.log(mode);
     this.modalCtrl
     .create({
       component: CreateTappedComponent, 
-      componentProps: {tappedBeer: this.beer} 
+      componentProps: {tappedBeer: this.beer, selectedMode: mode} 
     })
     .then(modalEl => {
       modalEl.present();

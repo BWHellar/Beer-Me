@@ -46,7 +46,7 @@ export class EditBeerPage implements OnInit {
   }
 
   onUpdateBeer() {
-    if(!this.form.valid) {
+    if (!this.form.valid) {
       return;
     }
     console.log(this.form);
