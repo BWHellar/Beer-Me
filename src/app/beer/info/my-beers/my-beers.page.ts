@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Beer } from '../../beer.model';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { BeerService } from '../../beer.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -11,8 +12,10 @@ import { BeerService } from '../../beer.service';
   templateUrl: './my-beers.page.html',
   styleUrls: ['./my-beers.page.scss'],
 })
-export class MyBeersPage implements OnInit {
+export class MyBeersPage implements OnInit, OnDestroy {
   beer: Beer;
+  private beerSub: Subscription
+
 
   constructor(
     private route: ActivatedRoute,
@@ -26,8 +29,15 @@ export class MyBeersPage implements OnInit {
         this.navCtrl.navigateBack('/beer/tabs/info');
         return;
       }
-      this.beer = this.beerService.getBeer(paramMap.get('beerId'));
+      this.beerSub = this.beerService.getBeer(paramMap.get('beerId')).subscribe( beer => {
+        this.beer = beer;
+      });
     });
   }
 
+  ngOnDestroy() {
+    if(this.beerSub){
+      this.beerSub.unsubscribe();
+    }
+  }
 }

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, ModalController, ActionSheetController } from '@ionic/angular';
 
 import { BeerService } from '../../beer.service';
 import { Beer } from '../../beer.model';
 import { CreateTappedComponent } from '../../../tapped/create-tapped/create-tapped.component';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -12,8 +13,9 @@ import { CreateTappedComponent } from '../../../tapped/create-tapped/create-tapp
   templateUrl: './beer-detail.page.html',
   styleUrls: ['./beer-detail.page.scss'],
 })
-export class BeerDetailPage implements OnInit {
+export class BeerDetailPage implements OnInit, OnDestroy {
   beer: Beer;
+  private beerSub: Subscription;
 
   constructor(
     private navCtrl: NavController,
@@ -24,12 +26,14 @@ export class BeerDetailPage implements OnInit {
     ) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe(paramMap => {
+    this.beerSub = this.route.paramMap.subscribe(paramMap => {
       if(!paramMap.has('beerId')){
         this.navCtrl.navigateBack('/beer/tabs/discover');
         return;
       }
-      this.beer = this.beerService.getBeer(paramMap.get('beerId'))
+      this.beerService.getBeer(paramMap.get('beerId')).subscribe(beer => {
+        this.beer = beer;
+      });
     });
   }
 
@@ -72,5 +76,11 @@ export class BeerDetailPage implements OnInit {
         console.log('Tapped');
       }
     });
+  }
+
+  ngOnDestroy(){
+    if(this.beerSub) {
+      this.beerSub.unsubscribe();
+    }
   }
 }

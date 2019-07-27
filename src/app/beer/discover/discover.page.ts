@@ -16,8 +16,10 @@ export class DiscoverPage implements OnInit {
   constructor(private beerService: BeerService) { }
 
   ngOnInit() {
-    this.loadedBeer = this.beerService.beer;
-    this.listedLoadedBeer = this.loadedBeer.slice(1);
+    this.beerService.beer.subscribe(beer => {
+      this.loadedBeer = beer;
+      this.listedLoadedBeer = this.loadedBeer.slice(1);
+    });
   }
 
   onFilterUpdate(event: CustomEvent<SegmentChangeEventDetail>){
