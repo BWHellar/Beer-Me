@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { BeerService } from '../../beer.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-beer',
@@ -9,7 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class NewBeerPage implements OnInit {
   form: FormGroup;
 
-  constructor() { }
+  constructor(private beerService: BeerService, private router: Router) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -33,7 +35,16 @@ export class NewBeerPage implements OnInit {
   }
 
   onCreateBeer() {
-    console.log(this.form);
+    if(!this.form.valid){
+      return;
+    }
+    this.beerService.addBeer(
+      this.form.value.title, 
+      this.form.value.description, 
+      +this.form.value.price, 
+      new Date(this.form.value.date)
+    );
+    this.form.reset();
+    this.router.navigate(['/beer/tabs/info'])
   }
-
 }
