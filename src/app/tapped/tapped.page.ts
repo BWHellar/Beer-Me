@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 export class TappedPage implements OnInit, OnDestroy {
 
   loadedTapped: Tapped[];
+  isLoading = false;
   private tappedSub: Subscription;
 
   constructor(private tappedService: TappedService, private loadingCtrl: LoadingController) { }
@@ -20,6 +21,13 @@ export class TappedPage implements OnInit, OnDestroy {
     this.tappedSub = this.tappedService.tapped.subscribe(tapped => {
       this.loadedTapped =tapped;
     })
+  }
+
+  ionViewWillEnter() {
+    this.isLoading = true;
+    this.tappedService.fetchTapped().subscribe(() =>{
+      this.isLoading = false;
+    });
   }
 
   onUndo(tappedId: string, slidingEl: IonItemSliding){
