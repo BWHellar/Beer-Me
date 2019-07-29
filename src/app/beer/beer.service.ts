@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Beer } from './beer.model';
 import { AuthService } from '../auth/auth.service';
 import { BehaviorSubject } from 'rxjs';
-import { take, map, tap, delay } from 'rxjs/operators';
+import { take, map, tap, delay, switchMap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -43,7 +44,7 @@ export class BeerService {
     return this._beer.asObservable();
   }
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private http: HttpClient) { }
 
   getBeer(id: string){
     return this.beer.pipe(
@@ -57,7 +58,9 @@ export class BeerService {
 
 
   addBeer(title: string, description: string, price: number, date: Date) {
-    const newBeer = new Beer(Math.random().toString(), 
+    let generateId: string;
+    const newBeer = new Beer(
+    Math.random().toString(), 
     title, 
     description, 
     'https://blindtigerdesign.com/wp-content/uploads/2019/04/blackraven-can-kittykat.jpg', 
@@ -65,13 +68,26 @@ export class BeerService {
     date,
     this.authService.userId
     );
-    return this.beer.pipe(
-      take(1),
-      delay(1000), 
-      tap(beer => {
-        this._beer.next(beer.concat(newBeer));
-    })
-    );
+    return this.http
+      .post<{name: string}>('https://bwh-beer-me.firebaseio.com/tapped-beer.json', {...newBeer, id: null})
+      .pipe(
+        switchMap(resData => {
+          generateId = resData.name;
+          return this.beer;
+        }),
+        take(1),
+        tap(beer => {
+          newBeer.id = generateId;
+          this._beer.next(beer.concat(newBeer));
+        })
+      );
+    // return this.beer.pipe(
+    //   take(1),
+    //   delay(1000), 
+    //   tap(beer => {
+    //     this._beer.next(beer.concat(newBeer));
+    //   })
+    // );
   }
 
   updateBeer(beerId: string, title: string, description: string) {
