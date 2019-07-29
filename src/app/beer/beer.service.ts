@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Beer } from './beer.model';
 import { AuthService } from '../auth/auth.service';
 import { BehaviorSubject } from 'rxjs';
-import { take, map } from 'rxjs/operators';
+import { take, map, tap, delay } from 'rxjs/operators';
 
 
 @Injectable({
@@ -65,10 +65,34 @@ export class BeerService {
     date,
     this.authService.userId
     );
-    this.beer.pipe(take(1)).subscribe(beer => {
-      setTimeout(() => {
+    return this.beer.pipe(
+      take(1),
+      delay(1000), 
+      tap(beer => {
         this._beer.next(beer.concat(newBeer));
-      }, 1000);
-    });
+    })
+    );
+  }
+
+  updateBeer(beerId: string, title: string, description: string) {
+    return this.beer.pipe(
+      take(1), 
+      delay(1000),
+      tap(beer => {
+      const updatedBeerIndex = beer.findIndex(be => be.id === beerId);
+      const updatedBeer =  [...beer];
+      const oldBeer = updatedBeer[updatedBeerIndex];
+      updatedBeer[updatedBeerIndex] = new Beer(
+        oldBeer.id, 
+        title, 
+        description, 
+        oldBeer.imageUrl, 
+        oldBeer.price, 
+        oldBeer.date, 
+        oldBeer.userId
+        );
+        this._beer.next(updatedBeer);
+      })
+    );
   }
 }

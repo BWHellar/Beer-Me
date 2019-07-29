@@ -43,14 +43,16 @@ export class NewBeerPage implements OnInit {
       message: 'Chugging...'
     }).then(loadingEl => {
       loadingEl.present();
+      this.beerService.addBeer(
+        this.form.value.title, 
+        this.form.value.description, 
+        +this.form.value.price, 
+        new Date(this.form.value.date)
+      ).subscribe (() => {
+        loadingEl.dismiss();
+        this.form.reset();
+        this.router.navigate(['/beer/tabs/info'])
+      });
     });
-    this.beerService.addBeer(
-      this.form.value.title, 
-      this.form.value.description, 
-      +this.form.value.price, 
-      new Date(this.form.value.date)
-    );
-    this.form.reset();
-    this.router.navigate(['/beer/tabs/info'])
   }
 }

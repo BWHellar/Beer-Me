@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NavController, LoadingController } from '@ionic/angular';
 
 import { BeerService } from '../../beer.service';
 import { Beer } from '../../beer.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { subscribeOn } from 'rxjs/operators';
+import { create } from 'domain';
 
 @Component({
   selector: 'app-edit-beer',
@@ -20,7 +22,9 @@ export class EditBeerPage implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private beerService: BeerService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private router: Router,
+    private loadingCtrl: LoadingController
   ) { }
 
   ngOnInit() {
@@ -54,8 +58,22 @@ export class EditBeerPage implements OnInit, OnDestroy {
     if (!this.form.valid) {
       return;
     }
-    console.log(this.form);
-  }
+    this.loadingCtrl.create({
+      message: 'Chugging...'
+    }).then(loadingEl => {
+      loadingEl.present();
+      this.beerService.updateBeer(
+        this.beer.id, 
+        this.form.value.title, 
+        this.form.value.description
+        ).subscribe(() => {
+          loadingEl.dismiss();
+          this.form.reset();
+          this.router.navigate(['/beer/tabs/discover']);
+        });
+      })
+    }
+    
 
   ngOnDestroy() {
     if(this.beerSub){
