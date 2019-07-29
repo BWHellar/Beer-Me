@@ -100,12 +100,11 @@ export class BeerService {
   }
 
   updateBeer(beerId: string, title: string, description: string) {
+    let updatedBeer:Beer[];
     return this.beer.pipe(
-      take(1), 
-      delay(1000),
-      tap(beer => {
+      take(1),switchMap(beer => {
       const updatedBeerIndex = beer.findIndex(be => be.id === beerId);
-      const updatedBeer =  [...beer];
+      updatedBeer =  [...beer];
       const oldBeer = updatedBeer[updatedBeerIndex];
       updatedBeer[updatedBeerIndex] = new Beer(
         oldBeer.id, 
@@ -116,8 +115,14 @@ export class BeerService {
         oldBeer.date, 
         oldBeer.userId
         );
-        this._beer.next(updatedBeer);
-      })
+        return this.http.put(
+          `https://bwh-beer-me.firebaseio.com/tapped-beer/${beerId}.json`,
+        { ...updatedBeer[updatedBeerIndex], id: null}
+      );
+    }), 
+    tap(() => {
+      this._beer.next(updatedBeer);
+    })
     );
   }
 }

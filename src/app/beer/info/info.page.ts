@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class InfoPage implements OnInit, OnDestroy {
   tryBeers: Beer[];
+  isLoading = false;
   private beerSub: Subscription;
 
   constructor(private beerService: BeerService) { }
@@ -22,7 +23,10 @@ export class InfoPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
-    this.beerService.fetchBeer().subscribe();
+    this.isLoading = true;
+    this.beerService.fetchBeer().subscribe(() => {
+      this.isLoading = false;
+    });
   }
 
   onEdit(beerId: string) {
