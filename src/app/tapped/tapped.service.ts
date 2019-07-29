@@ -45,6 +45,12 @@ export class TappedService {
     }
 
     cancelTapped(tappedId: string) {
-
+        return this.tapped.pipe(
+            take(1),
+            delay(1000),
+            tap(tapped => {
+                this._tapped.next(tapped.filter(t => t.id !== tappedId));
+            })
+        );
     }
 }

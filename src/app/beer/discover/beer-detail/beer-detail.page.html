@@ -19,7 +19,7 @@
           <p>{{ beer.description }}</p>
         </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="isTapped">
       <ion-col size-sm="6" offset-sm="3" text-center>
         <ion-button color="primary" margin (click)="onSaveBeer()">Save</ion-button>
       </ion-col>

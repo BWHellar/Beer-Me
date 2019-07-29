@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TappedService } from './tapped.service';
 import { Tapped } from './tapped.model';
-import { IonItemSliding } from '@ionic/angular';
+import { IonItemSliding, LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -14,7 +14,7 @@ export class TappedPage implements OnInit, OnDestroy {
   loadedTapped: Tapped[];
   private tappedSub: Subscription;
 
-  constructor(private tappedService: TappedService) { }
+  constructor(private tappedService: TappedService, private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     this.tappedSub = this.tappedService.tapped.subscribe(tapped => {
@@ -22,9 +22,16 @@ export class TappedPage implements OnInit, OnDestroy {
     })
   }
 
-  onUndo(beerId: string, slidingEl: IonItemSliding){
+  onUndo(tappedId: string, slidingEl: IonItemSliding){
     slidingEl.close();
-    
+    this.loadingCtrl.create({
+      message: 'Chugging...'
+    }).then(loadingEl => {
+      loadingEl.present();
+      this.tappedService.cancelTapped(tappedId).subscribe(() => {
+        loadingEl.dismiss();
+      });
+    });
   }
 
   ngOnDestroy() {

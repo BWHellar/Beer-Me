@@ -7,6 +7,7 @@ import { Beer } from '../../beer.model';
 import { CreateTappedComponent } from '../../../tapped/create-tapped/create-tapped.component';
 import { Subscription } from 'rxjs';
 import { TappedService } from 'src/app/tapped/tapped.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { TappedService } from 'src/app/tapped/tapped.service';
 })
 export class BeerDetailPage implements OnInit, OnDestroy {
   beer: Beer;
+  isTapped = false;
   private beerSub: Subscription;
 
   constructor(
@@ -25,7 +27,8 @@ export class BeerDetailPage implements OnInit, OnDestroy {
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
     private tappedService: TappedService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private authService: AuthService
     ) {}
 
   ngOnInit() {
@@ -36,6 +39,7 @@ export class BeerDetailPage implements OnInit, OnDestroy {
       }
       this.beerService.getBeer(paramMap.get('beerId')).subscribe(beer => {
         this.beer = beer;
+        this.isTapped = beer.userId !== this.authService.userId;
       });
     });
   }
