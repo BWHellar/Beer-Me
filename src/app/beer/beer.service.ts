@@ -6,45 +6,54 @@ import { BehaviorSubject } from 'rxjs';
 import { take, map, tap, delay, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
+interface BeerData {
+  date: Date;
+  description: string;
+  imageUrl: string;
+  price: number;
+  title: string;
+  userId: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class BeerService {
-  private _beer = new BehaviorSubject<Beer[]>([new Beer (
-    'a1',
-    'Brother',
-    'Some dank beer',
-    'https://static1.squarespace.com/static/5386bf34e4b0f6a71c87ce6a/596d3d6c15d5db847920a022/596d40ea6f4ca3599c80b8f9/1523045709779/Fremont-Brother-12oz-can.png', 
-    14.99,
-    new Date(),
-    'bren'
-    ),
-  new Beer (
-    'a2',
-    'Alphadelic',
-    'Some dank beer',
-    'https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/h79/hd6/11196073771038.png', 
-    11.99,
-    new Date(),
-    'abc'
-    ),
-  new Beer (
-    'a3',
-    'Kitty Kat Blues',
-    'Some dank beer',
-    'https://blindtigerdesign.com/wp-content/uploads/2019/04/blackraven-can-kittykat.jpg', 
-    10.99,
-    new Date(),
-    'bren'
-    )
-]);
+  private _beer = new BehaviorSubject<Beer[]>([]);
 
   get beer() {
     return this._beer.asObservable();
   }
 
   constructor(private authService: AuthService, private http: HttpClient) { }
+
+  fetchBeer() {
+    return this.http
+    .get<{[key: string]: BeerData }>('https://bwh-beer-me.firebaseio.com/tapped-beer.json')
+    .pipe(map(resData =>{
+      const beer = [];
+      for(const key in resData) {
+        if(resData.hasOwnProperty(key)){
+          beer.push(new Beer(
+            key,  
+            resData[key].title, 
+            resData[key].description, 
+            resData[key].imageUrl, 
+            resData[key].price, 
+            new Date(resData[key].date), 
+            resData[key].userId
+            )
+          );
+        }
+      }
+      return beer;
+    }),
+    tap(beer => {
+      this._beer.next(beer);
+    })
+    );
+  }
 
   getBeer(id: string){
     return this.beer.pipe(

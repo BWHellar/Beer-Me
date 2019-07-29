@@ -21,6 +21,10 @@ export class InfoPage implements OnInit, OnDestroy {
     });
   }
 
+  ionViewWillEnter() {
+    this.beerService.fetchBeer().subscribe();
+  }
+
   onEdit(beerId: string) {
     console.log('Editing', beerId);
   }
