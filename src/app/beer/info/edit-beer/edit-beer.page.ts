@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController, LoadingController } from '@ionic/angular';
+import { NavController, LoadingController, AlertController } from '@ionic/angular';
 
 import { BeerService } from '../../beer.service';
 import { Beer } from '../../beer.model';
@@ -25,7 +25,8 @@ export class EditBeerPage implements OnInit, OnDestroy {
     private beerService: BeerService,
     private navCtrl: NavController,
     private router: Router,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController
   ) { }
 
   ngOnInit() {
@@ -53,10 +54,20 @@ export class EditBeerPage implements OnInit, OnDestroy {
           })
         });
         this.isLoading = false;
-      });
-    });
-      
-  }
+      }, error => {
+        this.alertCtrl.create({
+          header: 'Error', 
+          message: 'Not Fetched', 
+          buttons: [{text: 'OK', handler: () => {
+            this.router.navigate(['/beer/tabs/info'])
+          }}]
+        }).then(alertEl => {
+        alertEl.present();
+        });
+      }
+    );
+  });
+}
 
   onUpdateBeer() {
     if (!this.form.valid) {

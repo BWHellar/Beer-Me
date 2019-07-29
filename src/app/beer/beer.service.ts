@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Beer } from './beer.model';
 import { AuthService } from '../auth/auth.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { take, map, tap, delay, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
@@ -61,7 +61,7 @@ export class BeerService {
     )
     .pipe(
       map(beerData => {
-        return new Beer(id, beerData.title, beerData.description, beerData.imageUrl, beerData.price, new Date(beerData.date), beerData.userId)
+        return new Beer(id, beerData.title, beerData.description,  beerData.imageUrl, beerData.price, new Date(beerData.date), beerData.userId,)
       })
     );
   }
@@ -103,7 +103,16 @@ export class BeerService {
   updateBeer(beerId: string, title: string, description: string) {
     let updatedBeer:Beer[];
     return this.beer.pipe(
-      take(1),switchMap(beer => {
+      take(1),
+      switchMap(beer => {
+        if(!beer || beer.length <= 0) {
+          return this.fetchBeer();
+        } else {
+          return of(beer);
+        }
+  
+    }),
+    switchMap(beer => {
       const updatedBeerIndex = beer.findIndex(be => be.id === beerId);
       updatedBeer =  [...beer];
       const oldBeer = updatedBeer[updatedBeerIndex];

@@ -35,10 +35,6 @@ const routes: Routes = [
                     {
                         path: 'edit/:beerId',
                         loadChildren: './info/edit-beer/edit-beer.module#EditBeerPageModule'
-                    },
-                    {
-                        path: ':beerId',
-                        loadChildren: './info/my-beers/my-beers.module#MyBeersPageModule'
                     }
                 ]
             },
