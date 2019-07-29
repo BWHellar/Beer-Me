@@ -16,6 +16,7 @@ export class DiscoverPage implements OnInit {
   loadedBeer: Beer[];
   listedLoadedBeer: Beer[];
   relevantBeer: Beer[];
+  isLoading = false;
 
   private beerSub: Subscription;
 
@@ -37,6 +38,13 @@ export class DiscoverPage implements OnInit {
       this.relevantBeer = this.listedLoadedBeer.filter(beer => beer.userId !== this.authService.userId
       );
     }
+  }
+
+  ionViewWillEnter() {
+    this.isLoading = true;
+    this.beerService.fetchBeer().subscribe(() => {
+      this.isLoading = false;
+    });
   }
 
   ngOnDestroy() {

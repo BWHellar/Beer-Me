@@ -15,7 +15,9 @@ import { subscribeOn } from 'rxjs/operators';
 })
 export class EditBeerPage implements OnInit, OnDestroy {
   beer: Beer;
+  beerId: string;
   form: FormGroup;
+  isLoading = false;
   private beerSub: Subscription;
 
   constructor(
@@ -32,6 +34,8 @@ export class EditBeerPage implements OnInit, OnDestroy {
         this.navCtrl.navigateBack('./beer/tabs/info');
         return;
       }
+      this.beerId = paramMap.get('beerId');
+      this.isLoading = true;
       this.beerSub = this.beerService.getBeer(paramMap.get('beerId')).subscribe (beer => {
         this.beer = beer;
         this.form = new FormGroup({
@@ -48,6 +52,7 @@ export class EditBeerPage implements OnInit, OnDestroy {
             validators: [Validators.required, Validators.min(1)]
           })
         });
+        this.isLoading = false;
       });
     });
       

@@ -56,11 +56,12 @@ export class BeerService {
   }
 
   getBeer(id: string){
-    return this.beer.pipe(
-      take(1),
-      map(beer => {
-        return {...beer.find(
-          b => b.id === id) };
+    return this.http
+    .get<BeerData>(`https://bwh-beer-me.firebaseio.com/tapped-beer/${id}.json`
+    )
+    .pipe(
+      map(beerData => {
+        return new Beer(id, beerData.title, beerData.description, beerData.imageUrl, beerData.price, new Date(beerData.date), beerData.userId)
       })
     );
   }
