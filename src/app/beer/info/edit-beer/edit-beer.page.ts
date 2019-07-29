@@ -6,7 +6,7 @@ import { BeerService } from '../../beer.service';
 import { Beer } from '../../beer.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { subscribeOn } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-edit-beer',
@@ -52,6 +52,7 @@ export class EditBeerPage implements OnInit, OnDestroy {
             updateOn: 'blur',
             validators: [Validators.required, Validators.min(1)]
           })
+    
         });
         this.isLoading = false;
       }, error => {

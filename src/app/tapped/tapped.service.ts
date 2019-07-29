@@ -75,7 +75,8 @@ export class TappedService {
     }
 
     fetchTapped() {
-        return this.http.get<{[key: string]: TappedData}>(`https://bwh-beer-me.firebaseio.com/tapped-beer/tapped.json?orderBy="userId"&equalTo="${this.authService.userId}"`
+        return this.http
+        .get<{ [key: string]: TappedData}>(`https://bwh-beer-me.firebaseio.com/tapped.json?orderBy="userId"&equalTo="${this.authService.userId}"`
         ).pipe(map(tappedData => {
             const tapped = [];
             for(const key in tappedData) {
