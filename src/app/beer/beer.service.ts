@@ -66,7 +66,9 @@ export class BeerService {
     this.authService.userId
     );
     this.beer.pipe(take(1)).subscribe(beer => {
-      this._beer.next(beer.concat(newBeer));
+      setTimeout(() => {
+        this._beer.next(beer.concat(newBeer));
+      }, 1000);
     });
   }
 }

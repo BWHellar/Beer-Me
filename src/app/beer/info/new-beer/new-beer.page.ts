@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BeerService } from '../../beer.service';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-new-beer',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 export class NewBeerPage implements OnInit {
   form: FormGroup;
 
-  constructor(private beerService: BeerService, private router: Router) { }
+  constructor(private beerService: BeerService, private router: Router, private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -38,6 +39,11 @@ export class NewBeerPage implements OnInit {
     if(!this.form.valid){
       return;
     }
+    this.loadingCtrl.create({
+      message: 'Chugging...'
+    }).then(loadingEl => {
+      loadingEl.present();
+    });
     this.beerService.addBeer(
       this.form.value.title, 
       this.form.value.description, 

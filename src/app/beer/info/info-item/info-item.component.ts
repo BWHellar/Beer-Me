@@ -13,8 +13,5 @@ export class InfoItemComponent implements OnInit {
 
   ngOnInit() {}
 
-  getDummyDate() {
-    return new Date();
-  }
 
 }
