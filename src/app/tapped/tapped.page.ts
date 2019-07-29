@@ -17,7 +17,7 @@ export class TappedPage implements OnInit, OnDestroy {
   constructor(private tappedService: TappedService) { }
 
   ngOnInit() {
-    this.tappedService.tapped.subscribe(tapped => {
+    this.tappedSub = this.tappedService.tapped.subscribe(tapped => {
       this.loadedTapped =tapped;
     })
   }
