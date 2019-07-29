@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController, ModalController, ActionSheetController } from '@ionic/angular';
+import { NavController, ModalController, ActionSheetController, LoadingController } from '@ionic/angular';
 
 import { BeerService } from '../../beer.service';
 import { Beer } from '../../beer.model';
 import { CreateTappedComponent } from '../../../tapped/create-tapped/create-tapped.component';
 import { Subscription } from 'rxjs';
+import { TappedService } from 'src/app/tapped/tapped.service';
 
 
 @Component({
@@ -22,7 +23,9 @@ export class BeerDetailPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private beerService: BeerService,
     private modalCtrl: ModalController,
-    private actionSheetCtrl: ActionSheetController
+    private actionSheetCtrl: ActionSheetController,
+    private tappedService: TappedService,
+    private loadingCtrl: LoadingController
     ) {}
 
   ngOnInit() {
@@ -71,10 +74,25 @@ export class BeerDetailPage implements OnInit, OnDestroy {
       return modalEl.onDidDismiss();
     })
     .then(resultData => {
-      console.log(resultData.data, resultData.role);
       if (resultData.role === 'confirm') {
-        console.log('Tapped');
-      }
+        this.loadingCtrl
+        .create({
+          message: 'Chugging...'})
+        .then(loadingEl => {
+          loadingEl.present();
+          const data = resultData.data.tappedData;
+          this.tappedService.addTapped(
+            this.beer.id, 
+            this.beer.title, 
+            this.beer.imageUrl, 
+            data.name, 
+            data.state, 
+            data.date
+          ).subscribe(() =>{
+          loadingEl.dismiss();
+        });
+      });
+    }
     });
   }
 

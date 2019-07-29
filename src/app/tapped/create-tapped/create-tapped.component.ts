@@ -33,7 +33,7 @@ export class CreateTappedComponent implements OnInit {
         tappedData: {
           name: this.form.value['beer-name'],
           state: this.form.value['state-name'],
-          date: this.form.value['date-name']
+          date: new Date(this.form.value['date-name'])
     }  }, 'confirm');
   }
 

@@ -4,7 +4,9 @@ export class Tapped {
         public beerId: string, 
         public userId: string, 
         public beerTitle: string,
-        public date: string,
-        public state: string
+        public date: Date,
+        public state: string,
+        public beerImage: string,
+        public name: string
         ) {}
 }
