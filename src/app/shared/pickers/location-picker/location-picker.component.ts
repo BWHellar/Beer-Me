@@ -37,7 +37,7 @@ export class LocationPickerComponent implements OnInit {
         this.getAddress(modalData.data.lat, modalData.data.lng).pipe(
           switchMap(address => {
             pickedLocation.address = address;
-            return of(this.getMapImage(pickedLocation.lat, pickedLocation.lng, 14))
+            return of(this.getMapImage(pickedLocation.lat, pickedLocation.lng, 18))
         })).subscribe(staticMapImageUrl => {
           pickedLocation.staticMapImageUrl = staticMapImageUrl;
           this.selectedLocationImage = staticMapImageUrl;
