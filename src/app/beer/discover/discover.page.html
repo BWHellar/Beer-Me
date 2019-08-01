@@ -3,13 +3,13 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-    <ion-title>Discover</ion-title>
+    <ion-title>Breweries</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <ion-segment (ionChange)="onFilterUpdate($event)">
-    <ion-segment-button value="local" checked>Local</ion-segment-button>
+    <ion-segment-button value="local" checked>Nearby</ion-segment-button>
     <ion-segment-button value="worldwide">Worldwide</ion-segment-button>
   </ion-segment>
   <ion-grid *ngIf="isLoading">
