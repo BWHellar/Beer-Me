@@ -1,3 +1,5 @@
+import { PlaceLocation } from './location.model';
+
 export class Beer {
     constructor(
         public id: string,
@@ -6,6 +8,7 @@ export class Beer {
         public imageUrl: string,
         public price: number,
         public date: Date,
-        public userId: string
+        public userId: string,
+        public location: PlaceLocation
         ){}
 }

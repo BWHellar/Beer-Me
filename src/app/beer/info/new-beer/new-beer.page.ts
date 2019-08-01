@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BeerService } from '../../beer.service';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { PlaceLocation } from '../../location.model';
 
 @Component({
   selector: 'app-new-beer',
@@ -31,8 +32,13 @@ export class NewBeerPage implements OnInit {
       date: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
-      })
+      }),
+      location: new FormControl(null, { validators: [Validators.required] })
     });
+  }
+
+  onLocationPicked(location: PlaceLocation){
+    this.form.patchValue({location: location});
   }
 
   onCreateBeer() {
@@ -47,7 +53,8 @@ export class NewBeerPage implements OnInit {
         this.form.value.title, 
         this.form.value.description, 
         +this.form.value.price, 
-        new Date(this.form.value.date)
+        new Date(this.form.value.date),
+        this.form.value.location
       ).subscribe (() => {
         loadingEl.dismiss();
         this.form.reset();

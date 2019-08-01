@@ -5,6 +5,7 @@ import { AuthService } from '../auth/auth.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { take, map, tap, delay, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { PlaceLocation } from './location.model';
 
 interface BeerData {
   date: Date;
@@ -13,6 +14,7 @@ interface BeerData {
   price: number;
   title: string;
   userId: string;
+  location: PlaceLocation;
 }
 
 
@@ -42,7 +44,8 @@ export class BeerService {
             resData[key].imageUrl, 
             resData[key].price, 
             new Date(resData[key].date), 
-            resData[key].userId
+            resData[key].userId,
+            resData[key].location
             )
           );
         }
@@ -61,13 +64,28 @@ export class BeerService {
     )
     .pipe(
       map(beerData => {
-        return new Beer(id, beerData.title, beerData.description,  beerData.imageUrl, beerData.price, new Date(beerData.date), beerData.userId,)
+        return new Beer(
+          id, 
+          beerData.
+          title, 
+          beerData.description,  
+          beerData.imageUrl, 
+          beerData.price, 
+          new Date(beerData.date), 
+          beerData.userId,
+          beerData.location
+          )
       })
     );
   }
 
 
-  addBeer(title: string, description: string, price: number, date: Date) {
+  addBeer(
+    title: string, 
+    description: string, 
+    price: number, 
+    date: Date,
+    location: PlaceLocation) {
     let generateId: string;
     const newBeer = new Beer(
     Math.random().toString(), 
@@ -76,7 +94,8 @@ export class BeerService {
     'https://blindtigerdesign.com/wp-content/uploads/2019/04/blackraven-can-kittykat.jpg', 
     price, 
     date,
-    this.authService.userId
+    this.authService.userId,
+    location
     );
     return this.http
       .post<{name: string}>('https://bwh-beer-me.firebaseio.com/tapped-beer.json', {...newBeer, id: null})
@@ -123,7 +142,8 @@ export class BeerService {
         oldBeer.imageUrl, 
         oldBeer.price, 
         oldBeer.date, 
-        oldBeer.userId
+        oldBeer.userId,
+        oldBeer.location
         );
         return this.http.put(
           `https://bwh-beer-me.firebaseio.com/tapped-beer/${beerId}.json`,
