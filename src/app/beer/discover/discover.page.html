@@ -9,8 +9,8 @@
 
 <ion-content padding>
   <ion-segment (ionChange)="onFilterUpdate($event)">
-    <ion-segment-button value="local" checked>Nearby</ion-segment-button>
-    <ion-segment-button value="worldwide">Worldwide</ion-segment-button>
+    <ion-segment-button value="local" checked>Saved</ion-segment-button>
+    <ion-segment-button value="worldwide">Nearby</ion-segment-button>
   </ion-segment>
   <ion-grid *ngIf="isLoading">
     <ion-row>

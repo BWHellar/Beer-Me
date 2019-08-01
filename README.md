@@ -16,6 +16,12 @@ This project will focus on being able to catalogue beers you may have tried. It 
 ## Known Bugs
 TBD
 
+## To Do
+- Get user Geolocation 
+- Display breweries based on current location
+- Access Camera for users to take pictures of Brewery
+- Allow Users to select Brewery and then save favorite beers from Brwery
+
 ## Support and contact details
 
 If you have any issues please contact
