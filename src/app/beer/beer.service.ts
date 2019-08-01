@@ -91,7 +91,7 @@ export class BeerService {
     Math.random().toString(), 
     title, 
     description, 
-    'https://blindtigerdesign.com/wp-content/uploads/2019/04/blackraven-can-kittykat.jpg', 
+    'https://cdn.vox-cdn.com/thumbor/M7pkCZxX2J00USu5hfxnfOghls0=/0x0:4032x3024/1200x800/filters:focal(1772x1251:2416x1895)/cdn.vox-cdn.com/uploads/chorus_image/image/64677157/20190627_173627.0.jpg', 
     price, 
     date,
     this.authService.userId,
