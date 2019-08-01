@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { BeerDetailPage } from './beer-detail.page';
 import { CreateTappedComponent } from '../../../tapped/create-tapped/create-tapped.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   {
@@ -20,7 +21,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    SharedModule
   ],
   declarations: [BeerDetailPage, CreateTappedComponent],
   entryComponents: [CreateTappedComponent]

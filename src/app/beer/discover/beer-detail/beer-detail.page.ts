@@ -8,6 +8,7 @@ import { CreateTappedComponent } from '../../../tapped/create-tapped/create-tapp
 import { Subscription } from 'rxjs';
 import { TappedService } from 'src/app/tapped/tapped.service';
 import { AuthService } from 'src/app/auth/auth.service';
+import { MapModalComponent } from 'src/app/shared/map-modal/map-modal.component';
 
 
 
@@ -109,6 +110,22 @@ export class BeerDetailPage implements OnInit, OnDestroy {
         });
       });
     }
+    });
+  }
+
+  onShowFullMap() {
+    this.modalCtrl.create({
+    component : MapModalComponent,
+    componentProps: {
+    center: {
+      lat:this.beer.location.lat,
+      lng: this.beer.location.lng},
+    selectable: false,
+    closeButtonText: 'Close',
+    title: this.beer.location.address
+    }
+    }).then(modalEl=> {
+      modalEl.present();
     });
   }
 
